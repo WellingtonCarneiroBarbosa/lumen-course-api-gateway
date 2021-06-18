@@ -19,9 +19,17 @@ class BooksController extends Controller
      */
     protected $bookService;
 
-    public function __construct(BookService $bookService)
+     /**
+     * The service to consume authors micro service
+     *
+     * @var \App\Services\AuthorService
+     */
+    protected $authorService;
+
+    public function __construct(BookService $bookService, AuthorService $authorService)
     {
         $this->bookService = $bookService;
+        $this->authorService = $authorService;
     }
 
     /**
@@ -52,7 +60,7 @@ class BooksController extends Controller
             );
         }
         //Checks if author exist
-        if(! (new AuthorService())->authorExist($request->author_id)['exist']) {
+        if(! $this->authorService->authorExist($request->author_id)['exist']) {
             return $this->response(
                 $request->all(),
                 "author_id param is invalid. Any author was found with this given id",
@@ -96,7 +104,7 @@ class BooksController extends Controller
         }
 
         //Checks if author exist
-        if(! (new AuthorService())->authorExist($request->author_id)['exist']) {
+        if(! $this->authorService->authorExist($request->author_id)['exist']) {
             return $this->response(
                 $request->all(),
                 "author_id param is invalid. Any author was found with this given id",
