@@ -23,18 +23,10 @@ trait ApiResponse
      */
     public function response($data, string $message = null, int $code = 200)
     {
-        try {
-            return response()->json([
-                    "data"      => $data,
-                    "message"   => $message ?? $this->default_sucess_message,
-                    "status"    => $code,
-                ], $code);
-        } catch (\Exception $e) {
-            if(config('app.debug')) {
-                throw new \Exception($e->getMessage());
-            } else {
-                return $this->error_response($e->getMessage());
-            }
-        }
+        return response([
+            "data"      => $data,
+            "message"   => $message ?? $this->default_sucess_message,
+            "status"    => $code,
+        ], $code)->header('Content-Type', 'application/json');
     }
 }
