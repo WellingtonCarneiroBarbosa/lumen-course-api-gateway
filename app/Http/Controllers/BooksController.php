@@ -52,10 +52,10 @@ class BooksController extends Controller
             );
         }
         //Checks if author exist
-        if(! (new AuthorService())->authorExist($request->author_id)) {
+        if(! (new AuthorService())->authorExist($request->author_id)['exist']) {
             return $this->response(
                 $request->all(),
-                "author_id param is invalid. No instance of author was found with this given id",
+                "author_id param is invalid. Any author was found with this given id",
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         };
@@ -96,10 +96,10 @@ class BooksController extends Controller
         }
 
         //Checks if author exist
-        if(! (new AuthorService())->authorExist($request->author_id)) {
+        if(! (new AuthorService())->authorExist($request->author_id)['exist']) {
             return $this->response(
                 $request->all(),
-                "author_id param is invalid. No instance of author was found with this given id",
+                "author_id param is invalid. Any author was found with this given id",
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         };
