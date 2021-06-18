@@ -2,10 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BookService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+    use ApiResponse;
+
+    /**
+     * The service to consume books micro service
+     *
+     * @var \App\Services\BookService
+     */
+    protected $bookService;
+
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
