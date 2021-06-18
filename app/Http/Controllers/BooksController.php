@@ -22,7 +22,6 @@ class BooksController extends Controller
         $this->bookService = $bookService;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +56,7 @@ class BooksController extends Controller
     public function show($book)
     {
         return $this->responseFromInternalService(
-            $this->bookService->getSpecificBook($book)
+            $this->bookService->getBook($book)
         );
     }
 

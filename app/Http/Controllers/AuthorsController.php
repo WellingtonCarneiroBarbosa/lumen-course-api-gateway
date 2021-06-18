@@ -29,7 +29,9 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        //
+        return $this->responseFromInternalService(
+            $this->authorService->getAuthors()
+        );
     }
 
     /**
@@ -40,7 +42,9 @@ class AuthorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->authorService->createAuthor($request->all())
+        );
     }
 
     /**
@@ -51,7 +55,9 @@ class AuthorsController extends Controller
      */
     public function show($author)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->authorService->getAuthor($author)
+        );
     }
 
     /**
@@ -63,7 +69,9 @@ class AuthorsController extends Controller
      */
     public function update(Request $request, $author)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->authorService->updateAuthor($request->all(), $author)
+        );
     }
 
     /**
@@ -74,6 +82,8 @@ class AuthorsController extends Controller
      */
     public function destroy($author)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->authorService->destroyAuthor($author)
+        );
     }
 }

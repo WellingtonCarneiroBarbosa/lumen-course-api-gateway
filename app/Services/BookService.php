@@ -42,7 +42,7 @@ class BookService
      * @param int $book
      * @return array
      */
-    public function getSpecificBook($book)
+    public function getBook($book)
     {
         return $this->performRequest("GET", "/books/{$book}");
     }
