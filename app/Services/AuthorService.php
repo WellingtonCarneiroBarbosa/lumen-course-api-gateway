@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Traits\ConsumesInternalServices;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthorService
 {
@@ -23,6 +24,28 @@ class AuthorService
     public function __construct()
     {
         $this->base_uri = config('services.authors.base_uri');
+    }
+
+    /**
+     * Checks if authors exist
+     *
+     * @param int $author_id
+     * @return array
+     */
+    public function authorExist($author_id) {
+        $author_service_response = $this->getAuthor($author_id);
+
+        if($author_service_response['status'] === Response::HTTP_NOT_FOUND) {
+            return [
+                "exist" => false,
+                "response" => $author_service_response,
+            ];
+        }
+
+        return [
+            "exist" => true,
+            "response" => $author_service_response,
+        ];
     }
 
     /**

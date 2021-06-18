@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthorService;
 use App\Services\BookService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class BooksController extends Controller
 {
@@ -42,6 +44,22 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
+        if(! $request->author_id) {
+            return $this->response(
+                $request->all(),
+                "author_id param is required",
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+        //Checks if author exist
+        if(! (new AuthorService())->authorExist($request->author_id)) {
+            return $this->response(
+                $request->all(),
+                "author_id param is invalid. No instance of author was found with this given id",
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        };
+
         return $this->responseFromInternalService(
             $this->bookService->createBook($request->all())
         );
@@ -69,6 +87,23 @@ class BooksController extends Controller
      */
     public function update(Request $request, $book)
     {
+        if(! $request->author_id) {
+            return $this->response(
+                $request->all(),
+                "author_id param is required",
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        //Checks if author exist
+        if(! (new AuthorService())->authorExist($request->author_id)) {
+            return $this->response(
+                $request->all(),
+                "author_id param is invalid. No instance of author was found with this given id",
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        };
+
         return $this->responseFromInternalService(
             $this->bookService->updateBook($request->all(), $book)
         );
