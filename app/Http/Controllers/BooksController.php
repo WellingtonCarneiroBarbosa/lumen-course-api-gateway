@@ -30,7 +30,9 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        return $this->responseFromInternalService(
+            $this->bookService->getBooks()
+        );
     }
 
     /**
@@ -41,7 +43,9 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->bookService->createBook($request->all())
+        );
     }
 
     /**
@@ -52,7 +56,9 @@ class BooksController extends Controller
      */
     public function show($book)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->bookService->getSpecificBook($book)
+        );
     }
 
     /**
@@ -64,7 +70,9 @@ class BooksController extends Controller
      */
     public function update(Request $request, $book)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->bookService->updateBook($request->all(), $book)
+        );
     }
 
     /**
@@ -75,6 +83,8 @@ class BooksController extends Controller
      */
     public function destroy($book)
     {
-        //
+        return $this->responseFromInternalService(
+            $this->bookService->destroyBook($book)
+        );
     }
 }

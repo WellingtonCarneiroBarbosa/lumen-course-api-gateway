@@ -14,7 +14,7 @@ trait ConsumesInternalServices
      * @param array $form_params
      * @param array $headers
      *
-     * @return string
+     * @return array
      */
     public function performRequest(
         string $method,
@@ -23,11 +23,18 @@ trait ConsumesInternalServices
         array $headers=[]
     )
     {
-        return (new Client([
+        $client = new Client([
             "base_uri" => $this->base_uri,
-        ]))->request($method, $request_url, [
+        ]);
+
+        $response = $client->request($method, $request_url, [
             'form_params'   => $form_params,
             'headers'       => $headers,
-        ])->getBody();
+            'http_errors' => false
+        ]);
+
+        $body = $response->getBody();
+
+        return json_decode($body, true);
     }
 }
