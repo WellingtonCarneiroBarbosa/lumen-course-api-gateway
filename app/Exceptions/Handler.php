@@ -110,6 +110,14 @@ class Handler extends ExceptionHandler
             );
         }
 
+        if($exception instanceof \Laravel\Passport\Exceptions\OAuthServerException) {
+            return $this->response(
+                [],
+                $exception->getMessage(),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
         return $this->response(
             [],
             config('app.debug') ? $exception->getMessage() : "Sorry, an unexpected error occurred. Please, try later",
