@@ -9,14 +9,17 @@ $router->get('/', function () use ($router) {
     ], 200);
 });
 
-$router->group(['middleware' => 'client.credentials'], function () use ($router) {
+/**
+ * User authenticated routes
+ */
+$router->group(['middleware' => 'auth:api'], function () use ($router) {
     /**
      * User Routes
      *
      */
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get("/", "UsersController@index");
-        $router->post("/", "UsersController@store");
+        $router->get("/me", "UsersController@me");
 
         // User id prefix routes
         $router->group(['prefix' => "{user}"], function () use ($router) {
@@ -60,9 +63,9 @@ $router->group(['middleware' => 'client.credentials'], function () use ($router)
 });
 
 /**
- * User credentials routes
+ * App Authenticated routes
  */
-$router->group(['middleware' => 'auth:api'], function () use ($router) {
-    $router->get("/users/me", "UsersController@me");
+$router->group(['middleware' => 'client.credentials'], function () use ($router) {
+    $router->post("/", "UsersController@store");
 });
 
