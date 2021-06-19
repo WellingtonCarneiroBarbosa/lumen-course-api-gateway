@@ -110,11 +110,11 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if($exception instanceof \Laravel\Passport\Exceptions\OAuthServerException) {
+        if($exception instanceof \Laravel\Passport\Exceptions\OAuthServerException || $exception instanceof AuthenticationException) {
             return $this->response(
                 [],
                 $exception->getMessage(),
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_UNAUTHORIZED
             );
         }
 

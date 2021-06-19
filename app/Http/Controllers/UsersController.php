@@ -131,4 +131,17 @@ class UsersController extends Controller
             Response::HTTP_OK
         );
     }
+
+    /**
+     * Returns the current authenticated user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me(Request $request)
+    {
+        return $this->response(
+            $request->user(),
+        );
+    }
 }
