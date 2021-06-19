@@ -11,6 +11,22 @@ $router->get('/', function () use ($router) {
 
 $router->group(['middleware' => 'client.credentials'], function () use ($router) {
     /**
+     * User Routes
+     *
+     */
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get("/", "UsersController@index");
+        $router->post("/", "UsersController@store");
+
+        // User id prefix routes
+        $router->group(['prefix' => "{user}"], function () use ($router) {
+            $router->get("/", "UsersController@show");
+            $router->put("/", "UsersController@update");
+            $router->delete("/", "UsersController@destroy");
+        });
+    });
+
+    /**
      * Books Routes
      *
      */
