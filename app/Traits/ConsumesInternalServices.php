@@ -27,6 +27,10 @@ trait ConsumesInternalServices
             "base_uri" => $this->base_uri,
         ]);
 
+        if(isset($this->secret)) {
+            $headers['Service-Authorization'] = $this->secret;
+        }
+
         $response = $client->request($method, $request_url, [
             'form_params'   => $form_params,
             'headers'       => $headers,

@@ -17,13 +17,21 @@ class AuthorService
     public $base_uri;
 
     /**
+     * The service secret
+     *
+     * @var string
+     */
+    public $secret;
+
+    /**
      * AuthorService class constructor.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->base_uri = config('services.authors.base_uri');
+        $this->base_uri     = config('services.authors.base_uri');
+        $this->secret       = config('services.authors.secret');
     }
 
     /**
